@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %}
+       Bienvenue sur le meilleur réseau d'appartements
+    {% endblock %}
+
+{% block body %}
+<div class="container">
+     <div class="jumbotron mt-5">
+        <h1 class="display-3">Bienvenue sur SymBnB !</h1>
+        <p class="lead">Nous mettons en relations les voyageurs et 
+        les proriétaires qui veulent profiter d'opportunités et gagner
+        de l'argent en proposant leur bien à la location !</p>
+        <hr class="my-4">
+        <p>Vous êtes voyageur ? Et vous voulez voir où 
+        vous pourrez loger pour prochain déplacement ?</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Voir nos annonces</a>
+        </p>
+     </div> {# fin div jumbotron #}
+     
+     <h2 class="h1 mt-3 mb-4">Nos appartements stars</h2>
+
+     <div class="row">
+        {# premier card 
+        le mt-3 sur le row se pour donner un 
+        peux de espacement entre jumbotron et le titre de card #}
+         <div class="col-md-4">
+             <div class="card bg-light mb-3">
+                 <div class="card-header text-center">
+                    3 chambres, <strong>49&euro; / nuit</strong> <br>
+                    <small>Pas encore noté</small> 
+                 </div> {# fin div header text-center se pour centre le text au centre #}
+
+                 <img src="http://placehold.it/1000x400px" alt="Imade de annonce"
+                 style="height:200px; width:100%; display: block">
+
+                 <div class="card-body">
+                    <h4 class="card-title">Appartement de ouf !</h4>
+                       <p class="card-text">
+                           Vous obtenez alors un texte aléatoire que
+                           vous pourrez ensuite utiliser librement dans vos maquettes.
+                       </p>
+                      <a href="#" class="btn btn-secondary">En savoir plus !</a>
+                 </div> {# fin card-body #}
+             </div> {# fin card  bg-light mb-3 se pour la culeur light de fond et mb-3 se le marge bottom #}
+         </div>  {# fin col-md-4  ça veut dire que je vais avoir 3 colone avec le col-md-4 #}
+
+         {# 2eme card #}
+         <div class="col-md-4">
+             <div class="card bg-light mb-3">
+                 <div class="card-header text-center">
+                    3 chambres, <strong>49&euro; / nuit</strong> <br>
+                    <small>Pas encore noté</small> 
+                 </div> {# fin div header text-center se pour centre le text au centre #}
+
+                 <img src="http://placehold.it/1000x400px" alt="Imade de annonce"
+                 style="height:200px; width:100%; display: block">
+
+                 <div class="card-body">
+                    <h4 class="card-title">Appartement de ouf !</h4>
+                       <p class="card-text">
+                           Vous obtenez alors un texte aléatoire que
+                           vous pourrez ensuite utiliser librement dans vos maquettes.
+                       </p>
+                      <a href="#" class="btn btn-secondary">En savoir plus!</a>
+                 </div> {# fin card-body #}
+             </div> {# fin card  bg-light mb-3 se pour la culeur light de fond et mb-3 se le marge bottom #}
+         </div>  {# fin col-md-4  ça veut dire que je vais avoir 3 colone avec le col-md-4 #}
+         
+         {# le troisieme card #}
+         <div class="col-md-4">
+             <div class="card bg-light mb-3">
+                 <div class="card-header text-center">
+                    3 chambres, <strong>49&euro; / nuit</strong> <br>
+                    <small>Pas encore noté</small> 
+                 </div> {# fin div header text-center se pour centre le text au centre #}
+
+                 <img src="http://placehold.it/1000x400px" alt="Imade de annonce"
+                 style="height:200px; width:100%; display: block">
+
+                 <div class="card-body">
+                    <h4 class="card-title">Appartement de ouf !</h4>
+                       <p class="card-text">
+                           Vous obtenez alors un texte aléatoire que
+                           vous pourrez ensuite utiliser librement dans vos maquettes.
+                       </p>
+                      <a href="#" class="btn btn-secondary">En savoir plus !</a>
+                 </div> {# fin card-body #}
+             </div> {# fin card  bg-light mb-3 se pour la culeur light de fond et mb-3 se le marge bottom #}
+         </div>  {# fin col-md-4  ça veut dire que je vais avoir 3 colone avec le col-md-4 #}
+     </div> {# fin  row  Nos appartements stars #}
+
+     <h2 class="h1 mt-3 mb-4">Nos proriétaires stars !</h2>
+
+     <div class="row">
+        {# la premier card col-md-6 #}
+        <div class="col-md-6">
+            <div class="card border-secondary mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">Gheorghina Costincianu</h4>
+
+                    <hr>
+
+                    <div class="card-text">
+                        <img src="http://placehold.it/75x75" alt="Avatar de Gheorghina Costincianu" class="float-left mr-3">{# mr-3 pour margin right #}
+                           <p>Le texte généré est du pseudo latin et peut donner l'impression d'être du vrai texte.</p>
+                               <a href="#" class="btn btn-success float-right">En savoir plus!</a>
+                    </div> {# fin div card-text #}
+                </div> {# fin card-body #}
+            </div> {# fin div card border-secondary pour une culeur grise et mb-3 pour se metre une en decu de l'autre sur les mobile avec de marge #}
+        </div> {# fin col-md-6 pour avoir 2 colone ou col se automatique 2 colone #}
+
+        {# 2eme  card col-6 #}
+        <div class="col-md-6">
+            <div class="card border-secondary mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">Gheorghina Costincianu</h4>
+
+                    <hr>
+
+                    <div class="card-text">
+                        <img src="http://placehold.it/75x75" alt="Avatar de Gheorghina Costincianu" class="float-left mr-3">{# mr-3 pour margin right #}
+                           <p>Le texte généré est du pseudo latin et peut donner l'impression d'être du vrai texte.</p>
+                               <a href="#" class="btn btn-success float-right">En savoir plus!</a>
+                    </div> {# fin div card-text #}
+                </div> {# fin card-body #}
+            </div> {# fin div card border-secondary pour une culeur grise et mb-3 pour se metre une en decu de l'autre sur les mobile avec de marge #}
+        </div> {# fin col-md-6 pour avoir 2 colone ou col se automatique 2 colone #}
+     </div> {# fin div row #}
+
+</div> {# fin div container #}
+{% endblock %}
