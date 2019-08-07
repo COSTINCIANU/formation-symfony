@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{# Ici on montre l'affichage d'un formulaire d'eddition #}
+
+{% block title %}Edition d'une annonce{% endblock %}
+
+ {% form_theme form 'ad/_collection.html.twig' %}
+
+{% block body %}
+     <div class="container">
+        <h1>Modifier l'annonce : {{ ad.title }}</h1>
+
+       {# il fu pas oublier de configure dans config/packages:twig.yaml
+        la ligne suivante pour les formulaire bootstrap 4 
+           form_themes: ['bootstrap_4_layout.html.twig'] #}
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+ 
+        {{ form_end(form) }}
+     </div> {# fin div container #}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/ad.js"></script>
+{% endblock %}

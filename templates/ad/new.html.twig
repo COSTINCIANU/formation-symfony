@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{# Ici on montre l'affichage de Creation de formulaire #}
+
+
+{% block title %}Création d'une annonces{% endblock %}
+
+{# form_theme  form _self se la function qui permet de dire a twig que on 
+veut utiliser une form bien particulier #}
+{% form_theme form 'ad/_collection.html.twig' %}
+
+{% block body %}
+
+     <div class="container">
+        <h1>Créer une nouvelle annonce</h1>
+
+       {# il fu pas oublier de configure dans config/packages:twig.yaml
+        la ligne suivante pour les formulaire bootstrap 4 
+           form_themes: ['bootstrap_4_layout.html.twig'] #}
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">Créer la nouvelle annonce</button>
+ 
+        {{ form_end(form) }}
+     </div> {# fin div container #}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/ad.js"></script>
+{% endblock %}

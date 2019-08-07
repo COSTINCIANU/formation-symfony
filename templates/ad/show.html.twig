@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+   {{ad.title}}
+{% endblock %}
+
+{% block body %}
+
+   <div class="ad-title" style="background-image: url({{ ad.coverImage }})">
+     <div class="container">
+        <h1>{{ad.title}}</h1>
+          <p>{{ad.introduction}}</p>
+             <p class="h2">
+             <strong>{{ad.rooms}} chambres</strong> pour <strong>{{ad.price}}&euro;</strong> par nuit
+             </p>  
+              <a href="#" class="btn btn-primary">Réserver !</a>   
+     </div> {# fin du div container #}
+   </div> {# fin div class="ad-title" #}
+
+   <div class="container">
+       <div class="row">
+           <div class="col-md-8 mb-3">
+                {{ ad.content | raw }} {# filtre RAW se pour pas afficher les balise enleve
+                 la securite de twig si il y a une comment ici le balise <p>Paragraph</p>#}
+      
+                <div class="bd-example">
+                    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+                      <ol class="carousel-indicators">
+                        {% for image in ad.images %}
+                        <li data-target="#carouselExampleCaptions" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active"{% endif %}></li>
+                        {% endfor %}
+                      </ol>
+                <div class="carousel-inner">
+                        {% for image in ad.images %}
+                          <div class="carousel-item {% if loop.first %}active{% endif %}">
+                              <img src="{{ image.url }}" class="d-block w-100" alt="First slide">
+                              <div class="carousel-caption d-none d-md-block">
+                                  <h5>{{ ad.title }}</h5>
+                                  <p>{{ image.caption }}</p>
+                              </div> {# fin div carousel-caption #}
+                          </div>  {# fin div carousel-item active #}
+                        {% endfor %}
+                </div> {# fin div carousel-inner #}
+                              <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                              </a>
+                              <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                              </a>
+                  </div> {# fin div id="carouselExampleCaptions #}
+              </div> {#  fin div bg-exemple carrouselle #}
+            </div> {# din div col-md-8 mb-3 se pour que ils
+               passent en deçu une de l'autre sur le mobile et mb-3 se pour margin en bas = margin bottom #}
+
+
+           <div class="col">
+                <div class="row">
+                    <div class="col-4">
+                        <img src="http://placehold.it/75x75" alt="Avatar de Gheorghina">
+                    </div> {#  fin div col-4 #}
+                    <div class="col">
+                       <h3>Gheorghina Costicianu</h3>
+                          <span class="badge bedge-primary">3 annonces</span>
+                    </div> {# fin div col #}
+                </div> {# fin div row  se pour avoir plusieur collone #}
+              <div>
+                <p>
+                   Nocturnis conloquiis quibusve valido cogitabat placuerat aliis nisu confidentia auxilio nisu vi proximis interiret et scriptis ponderibus confidentia commentis tractatus.
+                </p>
+                <p>
+                   Nocturnis conloquiis quibusve valido cogitabat placuerat aliis nisu confidentia auxilio nisu vi proximis interiret et scriptis ponderibus confidentia commentis tractatus.
+                </p>
+                <p>
+                   Nocturnis conloquiis quibusve valido cogitabat placuerat aliis nisu confidentia auxilio nisu vi proximis interiret et scriptis ponderibus confidentia commentis tractatus.
+                </p>
+           
+              </div> {# fin div qui contient le paragraph #}
+           </div> {# fin div col #}
+       </div> {# fin div row #}
+   </div> {# fin div container #}
+
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos magnifiques annonces{% endblock %}
+
+{% block body %}
+
+<div class="container">
+   {# my-3 ça veut dire marge haut et bas #}
+   <h1 class="my-3">Voici les annonces de nos hôtes !</h1>
+
+   <div class="row">
+       {% for ad in ads %}
+          {# set url c'est une variable de factorisation pour les Url de
+           nous lien si un jour on veut changer
+           on change ici et ce tout pour nous trois
+           lien qui il y'a ici pour l'url image, 
+           le url de title et l'introduction #}
+          {% set url = path('ads_show', {'slug' : ad.slug}) %}
+          <div class="col-md-4">
+             <div class="card bg-light mb-3">
+                 <div class="card-header text-center">
+                    {{ ad.rooms }} chambres, <strong>{{ ad.price }}&euro; / nuit</strong> <br>
+                    <small>Pas encore noté</small> 
+                 </div> {# fin div header text-center se pour centre le text au centre #}
+                 
+                  <a href="{{ url }}">
+                     <img src="{{ ad.coverImage }}" alt="Imade de annonce"
+                     style="height:200px; width:100%; display: block">
+                  </a>
+
+                 <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="{{ url }}">
+                          {{ ad.title }}
+                        </a>
+                     </h4>
+                       <p class="card-text">
+                           {{ ad.introduction }}
+                       </p>
+                      <a href="{{ url }}" class="btn btn-secondary">En savoir plus !</a>
+                 </div> {# fin card-body #}
+             </div> {# fin card  bg-light mb-3 se pour la culeur light de fond et mb-3 se le marge bottom #}
+         </div>  {# fin col-md-4  ça veut dire que je vais avoir 3 colone avec le col-md-4 #}
+
+       {% endfor %}
+   </div> {# fin row #}
+</div> {# fin div container#}
+
+{% endblock %}

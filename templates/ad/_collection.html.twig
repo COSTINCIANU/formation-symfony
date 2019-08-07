@@ -1,0 +1,52 @@
+
+{# TAMPLETE corps et basse de deux formulaire que se soit de EDITION ou de CREATION  #}
+
+
+{# ici on appele le fichier edit dans la tamplete de formulaire a la place de theme _self on appele 'ad/_collection.html.twig' #}
+{% block _ad_images_widget %}
+    <p>Ici, vous pouvez ajouter vos propres image !</p>
+   
+   {{ form_widget(form) }}
+
+   {# Rappel: les inputs non nommés 
+   Un champs qui n'a pas d'attribute "name" n'eest pas envoyé au serveur #}
+    <input type="hidden" id="widgets-counter" value="0">
+
+   <div class="form-group">
+       <button type="button" 
+               id="add-image" 
+               class="btn btn-primary">Ajouter une image
+       </button> {#  fin de button attention il doit etre un button si non vas se summetre quand on apuis deçu #}
+   </div> {# fin div form-group #}
+{% endblock %}
+
+{% block _ad_images_entry_row %}
+  {{ form_widget(form) }} {# ici on enleve le label de notre champ des 2 image 0 et 1 #}
+{% endblock %}
+
+{# ici se le sous formulaire  d'ajout de image et legende (function Entry) #}
+{% block _ad_images_entry_widget %} 
+   <div class="form-group" id="block_{{id}}">
+   {{ form_errors(form) }}
+      <div class="row">
+          <div class="col-10">
+            <div class="row">
+               <div class="col">
+                     {{ form_widget(form.url) }} {# je ce que ma variable ImageType a un Url #}
+                     {{ form_errors(form.url) }} {# donne moi les erroe de champs Url de l'image  #}
+                  </div> {# fin div col premier conlone #}
+
+                  <div class="col">
+                     {{ form_widget(form.caption) }} {# je ce que ma variable ImageType a un Caption se une legende #}
+                     {{ form_errors(form.caption) }} {# donne moi les erroe de champs Caption legende  #}
+                  </div> {# fin div col second colone #}
+               </div> {# fin div row premier #}
+           </div> {# fin div col-10 #}
+         <div class="col-2">
+             {# on ajoute la data-action="delete" sur le button pour pouvoir le appeler en jquery pour le supprime si on le shuaite #}
+             {# on ajoute le data-target="#block_{{id}}" quel est l'image que je veut supprime et on le cherche par l'id et que se trouve dans la div form-group  #}
+            <button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-danger">x</button>
+         </div> {# fin div col-2 #}
+      </div> {# fin div row premie #}
+   </div> {# fin div form-group #}
+{% endblock %}
