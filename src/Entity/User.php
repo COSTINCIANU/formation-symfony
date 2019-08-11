@@ -97,6 +97,11 @@ class User implements UserInterface
      */
     private $ads;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role", mappedBy="users")
+     */
+    private $userRoles;
+
     
     public function getFullName() {
         return "{$this->firstName} {$this->lastName}";
@@ -118,7 +123,10 @@ class User implements UserInterface
 
     public function __construct()
     {
+        // Classe ArrayCollection de Doctrine
+        // C'est surcouche de tableaux, avec plus de fonctionnalités
         $this->ads = new ArrayCollection();
+        $this->userRoles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -254,7 +262,19 @@ class User implements UserInterface
     }
 
     public function getRoles() {
-        return ['ROLE_USER'];
+        // Rappel: la function getRole()
+        // Function imposée par l'interface UserInteface implémentée plus tôt
+        // La mission de getRole() Appelée par le composant se sécurité pour connaitre las rôles d'un user
+      $roles = $this->userRoles->map(function($role){
+        // ici la function map va boucle sur chaque element et va le transforme pour afficher un title 
+        // sur chaque role que la function vas passer la seule chose que elle va retenire ce le Title   
+        return $role->getTitle();      
+      })->toArray(); 
+
+      // ici on demande les roles des user dans un tableau array
+      $roles[] = 'ROLE_USER';
+      
+        return $roles;
     }
 
     public function getPassword(){
@@ -268,5 +288,33 @@ class User implements UserInterface
     }
 
     public function eraseCredentials(){}
+
+    /**
+     * @return Collection|Role[]
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(Role $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+            $userRole->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(Role $userRole): self
+    {
+        if ($this->userRoles->contains($userRole)) {
+            $this->userRoles->removeElement($userRole);
+            $userRole->removeUser($this);
+        }
+
+        return $this;
+    }
     
 }

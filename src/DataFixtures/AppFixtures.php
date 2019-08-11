@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Ad;
 use Faker\Factory;
+use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -25,6 +26,25 @@ class AppFixtures extends Fixture
 
         //la librerie FZANINOTTO/FAKER se pour crée de fauce donne mais realiste en français
         $faker = Factory::create('FR-fr');
+
+        // grace a ce code on se créer un noveau Role que est le Role Admin
+        $adminRole = new Role();
+        $adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+
+        // grace au code on crée un utilisateur qui aurra le Role Admin
+        $adminUser = new User();
+        $adminUser->setFirstName('Gina')
+                  ->setLastName('Costincianu')
+                  ->setEmail('gheorghina.costincianu@sfr.fr')
+                  ->setHash($this->encoder->encodePassword($adminUser, 'password'))
+                  ->setPicture('http://www.avatars-gratuits.com/nature/avatar-24.jpg')
+                  ->setIntroduction($faker->sentence())
+                  ->setDescription('<p>' .  join('</p></p>', $faker->paragraphs(3)) . '</p>')
+                  ->addUserRole($adminRole); // la on dit je veut que tu ajoute a cette persone le add adminRole
+        
+        // je veut que le manager persist cette utilisateur la que se un utilisateur une peux particulier que se un AdminUser 
+        $manager->persist($adminUser);
 
         // Nous gérons les utilisateurs
         $users = [];

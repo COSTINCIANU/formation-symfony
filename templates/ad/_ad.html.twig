@@ -27,6 +27,12 @@
                            {{ad.introduction}}
                        </p>
                       <a href="{{ url }}" class="btn btn-secondary">En savoir plus !</a>
+                       {# Si il y a quel'qu'en qui et connecté et en plus de ça l'utilisateur connecte se le meme
+                        qui a créer cette l'annonce  alors on afficera le lien #}
+                        {# Attention en twig on utilise le == mais pas le === #}
+                     {% if app.user and app.user == ad.author  %}
+                        <a href="{{ path('ads_edit', {'slug' : ad.slug}) }}" class="btn btn-secondary">Modifier l'annonce</a>  
+                     {% endif %}
                  </div> {# fin card-body #}
              </div> {# fin card  bg-light mb-3 se pour la culeur light de fond et mb-3 se le marge bottom #}
          </div>  {# fin col-md-4  ça veut dire que je vais avoir 3 colone avec le col-md-4 #}
