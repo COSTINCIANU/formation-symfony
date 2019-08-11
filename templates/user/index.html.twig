@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page de {{user.fullName}}{% endblock %}
+
+{% block body %}
+<div class="container">
+   <div class="row align-items-center my-3">
+       <div class="col-3 text-center">
+          <img src="{{user.picture}}" class="avatar mb-3" alt="Avatar de {{user.fullName}}">
+          {# le mb-3 se pour dire margin bottom #}
+          <br>
+          <span class="badge badge-primary">{{user.ads | length}} annonces</span>
+       </div>{# fin div col-3 #}
+       <div class="col-9">
+         <h1>{{user.fullName}}</h1>
+          {# ici la variable 1ere user de controller on regarde le profil et 
+          avec le 2eme user de application on regarde si l'utilisateur  et  l'utilisateur connecté #}
+          {# RAPPEL : TWIG : IS SAME AS Permet de comparer 2 objets #}
+          {% if user is same as(app.user) %}
+             <div class="mt-3">
+                 <a href="{{ path('account_profile') }}" class="btn btn-primary mr-2 mb-2">Modifier mes informations</a>
+                 <a href="{{ path('account_password') }}" class="btn btn-primary mb-2">Modifier mon mot de passe</a>
+             </div> {# fin div  le mt-3 pout margin top  #}
+          {% endif %}
+
+       </div> {# fin div col-9 on calcule 3+9= 12 #}
+   </div>{# fin div row align-items-center #}
+
+   {{user.description | raw }} {# ici on donne la description sur le profil de user #}
+
+   <hr> {# les balise <hr> on le met si on veut une ligne fine entre les elemetes #}
+   <h2>Les annonces de {{user.fullName}}</h2>
+
+   {# esque le nombre des anonnce des utilisateur est superieur a zero #}
+   {% if user.ads | length > 0 %}
+        <div class="row my-5"> 
+            {# pour chaque annonce au sain des annonce de utilisateur ads fire certin chose  #}
+            {% for ad in user.ads %}
+
+               {% include 'ad/_ad.html.twig' %}
+
+            {% endfor %} 
+
+        </div> {# fin div row #}
+    {% else %}
+       {# ici on dit que si l'utilsateur na pas d'annonce 
+       sur le site on va avoir cette alerte pour dire que il en ai pas d'annonce de cette utilisateur #}
+        <div class="alert alert-warning">
+            <p>
+              <strong>{{ user.fullName }}</strong> n'a pas encore d'annonce sur le site !
+            </p>
+        </div> {# fin div alert alert-warning #}
+    {% endif %}
+    
+</div> {# fin div container #}
+{% endblock %}

@@ -1,7 +1,16 @@
 security:
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders: # declaration de encoder pour le cryptage de mot de passe super securise 
+        App\Entity\User:
+            algorithm: bcrypt # algorithm pour l'hash de password
+            # La configuration d'un encodeur avec "bcrypt" comme algorithme est obsolète depuis Symfony 4.3, utilisez plutôt "auto".
+    
+            # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory: { memory: null }
+        in_database:  #ici on declare les proprieté de provaider pour de comparison et verification dans la bdd si ça existe déjà
+            entity:
+                class: App\Entity\User # dans l'entite de User
+                property: email   # et cherche par sont email pour compare
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -9,6 +18,15 @@ security:
         main:
             anonymous: true
 
+            provider: in_database
+
+            form_login:
+                login_path: account_login
+                check_path: account_login
+            
+            logout:
+                path: account_logout
+                target: account_login
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 

@@ -56,26 +56,28 @@
 
 
            <div class="col">
-                <div class="row">
-                    <div class="col-4">
-                        <img src="http://placehold.it/75x75" alt="Avatar de Gheorghina">
+           {# ad.author se une instance de la class User donc est lier au Entite User #}
+               {% set a = ad.author %} {# declaration de variable author 
+               pour l'appel veut que on appele plusieur fois on declare le 
+               set a = ad.author et on fait ici apele a la variable (a) ici parti author #}
+                <div class="row mb-3 align-items-center">
+                    <div class="col-3">
+                    <a href="{{ path('user_show', {'slug' : a.slug}) }}">
+                        <img src="{{a.picture}}" class="avatar avatar-medium" alt="Avatar de {{a.fullName}}">
+                    </a>
                     </div> {#  fin div col-4 #}
                     <div class="col">
-                       <h3>Gheorghina Costicianu</h3>
-                          <span class="badge bedge-primary">3 annonces</span>
+                        <a href="{{ path('user_show', {'slug' : a.slug}) }}">
+                            <h3>{{a.fullName}}</h3> {# cette function fullName on la declare dans la Entity User #}
+                            {# ici a.ads | length : ça me donne le tableau et le nombre des element que il contien 
+                            je le fait passer par le filtre length pour avoir la longeur de cette tableau #}
+                        </a>        
+                            <span class="badge badge-primary">{{a.ads | length}} annonces</span>
                     </div> {# fin div col #}
                 </div> {# fin div row  se pour avoir plusieur collone #}
               <div>
-                <p>
-                   Nocturnis conloquiis quibusve valido cogitabat placuerat aliis nisu confidentia auxilio nisu vi proximis interiret et scriptis ponderibus confidentia commentis tractatus.
-                </p>
-                <p>
-                   Nocturnis conloquiis quibusve valido cogitabat placuerat aliis nisu confidentia auxilio nisu vi proximis interiret et scriptis ponderibus confidentia commentis tractatus.
-                </p>
-                <p>
-                   Nocturnis conloquiis quibusve valido cogitabat placuerat aliis nisu confidentia auxilio nisu vi proximis interiret et scriptis ponderibus confidentia commentis tractatus.
-                </p>
-           
+                {{a.description | raw }} 
+                {# RAPPEL: le filtre TWIG "RAW" Permet de ne pas échaper les caractères spéciaux HTML #}
               </div> {# fin div qui contient le paragraph #}
            </div> {# fin div col #}
        </div> {# fin div row #}

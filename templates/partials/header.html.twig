@@ -15,9 +15,41 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                   <li class="nav-item">
-                       <a href="#" class="nav-link">Mon compte !</a>
-                   </li>
+                   {% if app.user %} {# si j'ai un user dans ma variable app et que se pas null #}
+                        {# si on et connecté #}
+                        <li class="nav-item dropdown">
+                           {# ici le data-toggle="dropdown" permet de fire ouvrir le menu deroulet de dropdown #}
+                           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountDropdownLink">
+                               <img src="{{app.user.picture}}" class="avatar avatar-mini" alt="Avatar de {{app.user.fullName}}">
+                               {{app.user.fullName}}
+                           </a> {#  #}
+                            {# ici on donne de class bootstrap pour dire que le menu serra ferre a droit #}
+
+                            {# avec aria-labelledby="accountDropdownLink" on fait appel a l'id declare dans href="#"
+                             ce commen ça que on arrive le ouvrire en faisaint appele par sont id
+                             Bootstrap va comprendre que quand on click sur le lien accountDropdownLink se cette
+                             accountDropdownLink que doit se ouvrire parceque ici on a la meme  #}
+                           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
+                             <a href="{{ path('ads_create') }}" class="dropdown-item">Créer une annonce</a>
+                            <div class="dropdown-divider"></div> {# fin div dropdown-divider #}
+
+                              {# ici on demande la route que on a declare dans AccountController #}
+                              <a href="{{ path('account_index') }}" class="dropdown-item">Mon compte</a>
+                              <a href="{{ path('account_profile') }}" class="dropdown-item">Modifier mon profil</a>
+                           
+                            <div class="dropdown-divider"></div> {# fin div dropdown-divider #}
+                            <a href="{{ path('account_logout') }}" class="dropdown-item">Déconnexion</a>
+                           </div> {# fin div dropdown-menu #}
+
+                        </li>
+                   {% else %} {# se que on est connecté #}
+                       <li class="nav-item">
+                           <a href="{{ path('account_register') }}" class="nav-link">Inscription</a> {# ça si on est connecté déjà #}
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('account_login') }}" class="nav-link">Connexion</a> {# ça si on est connecté déjà #}
+                        </li>
+                   {% endif %}
                 </ul>
             </div>
     </nav>
@@ -33,3 +65,10 @@
         </div> {# fin div alert #}
      </div> {# fin div container #}
    {% endfor %} 
+
+
+{# RAPPEL:  la variable globale APP Contien des 
+informations sur l'application, y compris sur l'utilisateur #}
+
+{# VARIABLE APP.USER:
+ Represente l'utilisateur connecté (vaut null si on n'est pas connecté) #}

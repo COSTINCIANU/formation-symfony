@@ -32,7 +32,7 @@ class AdController extends AbstractController
     }
 
      /**
-     * Permet de créer un formulair pour créer une annonce
+     * Permet de créer une annonce
      * 
      * @Route("/ads/new", name="ads_create")
      *
@@ -52,6 +52,10 @@ class AdController extends AbstractController
                 $image->setAd($ad);
                 $manager->persist($image);
             }
+            // ici on fait le lien entre l'author et les annonce pour afficher les author des chaque annonce 
+            // Rappel : on oblient le utilisateur connecté avec la function getUser()
+            // Disont que l'AUTHOR de cette annonce ce l'utilisateur que c'est connnecté 
+            $ad->setAuthor($this->getUser());
             
             $manager->persist($ad); // on demande de se prepare pour recevoir les information en bdd
               $manager->flush(); // on les enregistre en bdd  definitevement 

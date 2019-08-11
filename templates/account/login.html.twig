@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion au site{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+       <div class="col-md-3">&nbsp;</div> {# fin div col-md-3: le md-3 ça veut dire medium 3 vas disparetre au niveu d'mobile #}
+           <div class="col-md-6">
+              <div class="bg-light py-3 px-3">
+                {# ici le py pour padding vertical haut et bas et px-3 pour padding horizontal haut et bas #}
+                <h1>Connectez vous !</h1>
+
+                {% if hasError %}
+                  <div class="alert alert-danger">Une erreur est survenue, 
+                  le nom d'utilisateur ou alors le mot de passe est invalide</div>
+                {% endif %}
+
+                {# creation de formulaire de connexion #}
+
+                {#  ici on declare  l'acction sur le path que on a
+                 declare dans la security.yaml path: account_login #}
+                <form action="{{ path('account_login') }}" method="post">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        {# sur le champs d'input  du formulaire login 
+                        Symfony s'attend à des champs précis: _username #}
+                        <input type="text" name="_username" id="email" class="form-control" 
+                        placeholder="Adresse email..." required value="{{username}}">
+                    </div> {# fin div class="form-group" 1 #}
+
+                    <div class="form-group">
+                            <label for="password">Mot de passe</label>
+                        {# sur le champs d'input  du formulaire login 
+                        Symfony s'attend à des champs précis: _passowrd #}
+                        <input type="password" name="_password" id="password" class="form-control" placeholder="Mot de passe..." required>
+                        {# le required se pour rendre l'entre obligatoire de email et password #}
+                    </div> {# fin div class="form-group" 2 #}
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Connexion !</button>
+                    </div> {# fin div class="form-group" 3 #}
+                </form> {# fin form action #}
+            </div>  {#  fin div  bh-light py-3 px-3 #}
+        </div> {# fin div col-md-6 #}
+    </div> {# fin div row #}
+</div> {# fin div container #}
+{% endblock %}
