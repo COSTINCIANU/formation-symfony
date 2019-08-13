@@ -79,9 +79,15 @@ class Ad
      */
     private $author;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="ad")
+     */
+    private $bookings;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     /**
@@ -97,6 +103,44 @@ class Ad
             $this->slug = $slugify->slugify($this->title);
         }
     }
+
+    /**
+     * Permet d'obtenir un tableau des jours qui ne sont pas disponibles pour cette annonce
+     *
+     * @return array Un tableau d'objets DateTime représentant les jour d'occupation
+     */
+    public function getNotAvailableDays() {
+        // ici tabeau vide pour le moment qui contiendra par la suite le journées ou l'appart ne serra pas disponible 
+        $notAvailableDays = []; 
+
+        // on vas boucle sur nous réservation pour chaque une de réservation je connais pour chque une la date de arrive et de départ
+        foreach($this->bookings as $booking) {
+            // Calculer les jours qui se trouvent entres la date d'arrivée et de départ
+            // ici on calcule 24h * 60 minute * 60 seconde minute 
+            // on compare la date de arrive et la date de depart au forma timestamp
+            // la function range()de PHP Créé un tableau qui contient chaques étape existant entre deux nombres
+            // resultar = [10, 12, 14, 16, 18, 20] donc range compte et sotant de deux a chaque fois ça depand de sthep que on lui donne en dernier parametre ça peux etre 2 ou 4 ou 5 ou plus etc...
+            $resultat = range(
+                $booking->getStartDate()->getTimestamp(),
+                $booking->getEndDate()->getTimestamp(),
+                24 * 60 * 60 
+            );
+
+            // Tableau des chaînes des caractères de mes journées
+            $days = array_map(function($dayTimestamp){
+                return new \DateTime(date('Y-m-d', $dayTimestamp));
+            }, $resultat);
+            // ici haut on transforma le resultat obtenu en une DateTime que on a obtenu avec range() on le transforme avec array_map
+            // pour pouvoir le lire et le utiliser
+       
+            // je vais fussioner les deux tableau 
+            $notAvailableDays = array_merge($notAvailableDays, $days);
+
+        }
+        return $notAvailableDays;
+    }
+
+    
 
     public function getId(): ?int
     {
@@ -226,6 +270,37 @@ class Ad
     public function setAuthor(?user $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->contains($booking)) {
+            $this->bookings->removeElement($booking);
+            // set the owning side to null (unless already changed)
+            if ($booking->getAd() === $this) {
+                $booking->setAd(null);
+            }
+        }
 
         return $this;
     }

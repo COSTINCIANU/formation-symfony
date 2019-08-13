@@ -10,6 +10,7 @@ use App\Entity\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Entity\Booking;
 
 class AppFixtures extends Fixture
 {   
@@ -95,8 +96,9 @@ class AppFixtures extends Fixture
             // tableaux - 1 si un jour on change le nr de 10 
             // qui il a declare dans la boucle for des utilissateur
             $user = $users[mt_rand(0, count($users) - 1)];
-
-        $ad->setTitle($title)
+            
+            // ici on configure l'annonce
+            $ad->setTitle($title)
                ->setCoverImage($couverImage)
                ->setIntroduction($introduction)
                ->setContent($content)
@@ -114,6 +116,48 @@ class AppFixtures extends Fixture
 
                 $manager->persist($image);  // persist l'image dabord
             } 
+
+            // Gestion des réservations
+            // for pour donner une nr alleatoit entre 0, 10 
+            for($j = 1; $j <= mt_rand(0, 10); $j++) {
+                $booking = new Booking();
+                
+                // on demande a faker une date au minimum 6 mois et maximum maitenat
+                $createdAt = $faker->dateTimeBetween('-6 months');
+                // la date quand je veut venir dans l'apartement quand la reservation a commencer 
+                $startDate = $faker->dateTimeBetween('-3 months');
+
+             // Gestion de la date fin 
+                // la date de reservation entre 3 et 10 jours
+                $duration = mt_rand(3, 10); 
+                // la methode modify permet de ajoute ou enlever de jours a notre reservation pour le calcule exact de notre sejour
+                // endDate se saurra ma startDate a la quel je vu ajouter duration :Exemple  donc si ça fait 6 on ajoute 6 jours 
+                // ici pour pas modifier la vrais date on fait une clone de la date sur la methode elle meme
+                $endDate  = (clone $startDate)->modify("+$duration days");
+                // ici on conte le montant de la location
+                // donc ad on veut le pris de l'annonce et on le multiplie par la duration de sejour
+                // cette a dire le nombre de jours de location
+               
+               
+                $amount = $ad->getPrice() * $duration;
+                // le booker se un utilisateur aux assard qui vient reserve
+                // ici on cherche un user dans le tableau des users 
+                // aux assar par mis disponible et le -1 parceque se finit tjr a -1 veut que ça commance a zero
+                $booker = $users[mt_rand(0, count($users) -1)];
+                // declaration de la variable comment 
+                $comment = $faker->paragraph();
+
+            // Configuration de  notre booker
+                $booking->setBooker($booker)
+                        ->setAd($ad)
+                        ->setStartDate($startDate)
+                        ->setEndDate($endDate)
+                        ->setCreatedAt($createdAt)
+                        ->setAmount($amount)
+                        ->setComment($comment);
+
+                $manager->persist($booking);
+            }
     
             // persist() previent Doctrine qu'on veut sauver
             $manager->persist($ad); // persist l'annonce 

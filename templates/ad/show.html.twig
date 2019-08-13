@@ -13,7 +13,7 @@
              <p class="h2">
              <strong>{{ad.rooms}} chambres</strong> pour <strong>{{ad.price}}&euro;</strong> par nuit
              </p>  
-              <a href="#" class="btn btn-primary">Réserver !</a>
+              <a href="{{ path('booking_create', {'slug' : ad.slug}) }}" class="btn btn-primary">Réserver !</a>
               {# Si il y a quel'qu'en qui et connecté et en plus de ça l'utilisateur connecte se le meme
                qui a créer cette l'annonce  alors on afficera le lien #}
                {# Attention en twig on utilise le == mais pas le === #}

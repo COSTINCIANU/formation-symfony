@@ -84,17 +84,17 @@ class AdController extends AbstractController
      * Perment de afficher le formulaire de edition avec de expression de securite
      * 
      * @Route("/ads/{slug}/edit", name="ads_edit")
+     * 
      * @Security("is_granted('ROLE_USER') and user === ad.getAuthor()", 
      * message="Cette annonce ne vous appartient pas, vous ne pouvez pas la modifier") 
-     * // ici je veut enpeche l'utilisateur de edite un annonce si ne pas lui même l'Author
-     * // non seulement que la personne soit garanti utilisateur connecté avec 
-     * // isgranted role_user et que soit le même utilisateur que l'author de annonce
-     * 
-     * Annotation security Permet plus de flexibilité que isgranted grâce aux "Expression"
-     * Les expressions de sécurité Sorte de syntaxe logique exprimant des conditions d'accés
-     * 
      * @return Response
      */
+
+    // ici je veut enpeche l'utilisateur de edite un annonce si ne pas lui même l'Author
+    // non seulement que la personne soit garanti utilisateur connecté avec 
+    // isgranted role_user et que soit le même utilisateur que l'author de annonce 
+    // Annotation security Permet plus de flexibilité que isgranted grâce aux "Expression"
+    // Les expressions de sécurité Sorte de syntaxe logique exprimant des conditions d'accés
     public function edit(Ad $ad, Request $request, ObjectManager $manager){
         $form = $this->createForm(AdType::class, $ad);
          

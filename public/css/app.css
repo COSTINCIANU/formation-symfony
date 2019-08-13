@@ -40,3 +40,14 @@ div.carousel-caption {
 
 
 /**** fi de la Declaration de la photo Avatar de profil User *******/
+
+
+/******* debut de calendriers de reservation avec de date qui qont ou pas disponible se affiche en rouge  **********/
+
+.datepicker table tr td.disabled,
+.datepicker table tr td.disbled:hover {
+    color: firebrick !important;
+}
+
+
+/******* fin de calendriers de reservation avec de date qui qont ou pas disponible se affiche en rouge  **********/
