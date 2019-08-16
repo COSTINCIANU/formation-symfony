@@ -9,12 +9,28 @@ security:
         in_memory: { memory: null }
         in_database:  #ici on declare les proprieté de provaider pour de comparison et verification dans la bdd si ça existe déjà
             entity:
-                class: App\Entity\User # dans l'entite de User
-                property: email   # et cherche par sont email pour compare
+                class: App\Entity\User # dans l'entite de User  dans la bdd
+                property: email   # et cherche par sont email pour compare dans la bdb
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        admin: # le firewalls lit de haut en bas donc si on met les admin apre le main il prend en compte les premier firewalls de main 
+            # nous on veut dire attention nous on est sur le /admin on veut prendre le firewalls admin vec ses propriéte
+            # donc comment il est plus specifique que le main on doit le metre avant le main et en deçu de dev ça ne pose pas de probleme 
+            # Le pattern du FireWall Une expression régulière qui permet de delimiter la partie à sécuriser
+            pattern: ^/admin
+            anonymous: true
+
+            provider: in_database  # provider cherche des information dans la bdd
+            
+            form_login:  # ce form_login il est diferent se pour la gestion de back-end administration des annonces ilest diffent de l'autre declare plus haut 
+                login_path: admin_account_login  # ici on donne le chemain pour alle sur le form de login se account_login qui se trouve dans le dossier admin/account et a la @Route("/admin/login" name="admin_account_login")
+                check_path: admin_account_login  # et le chemain pour verifie si le information donner dans le form login sont varis sont les meme admin_account_login
+
+            logout:  # pour  quand on veut se déconnectée on utilise le path de front
+                path: admin_account_logout
+                target: homepage # on renvoi ver la page d'accueil
         main:
             anonymous: true
 
@@ -36,5 +52,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY } 
+        # Rôle qui représente un utilisateur non connecté  - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY } 
+        - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

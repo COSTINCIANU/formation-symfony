@@ -33,8 +33,12 @@ class Booking
     /**
      * @ORM\Column(type="datetime")
      * @Assert\Date(message="Attention, la date d'arrivée doit étre au bon format !")
-     * @Assert\GreaterThan("today", message="La date d'arrivée doit être ultérieure à la date d'aujourd'hui !")
+     * @Assert\GreaterThan("today", message="La date d'arrivée doit être ultérieure à la date d'aujourd'hui !",
+     * groups={"front"})
      */
+    // Parametre Groups Permet de définire les groupes dans lesquels se place une validation
+    // le simple fait de metre ça , groups={"front"} cella veut dire que on a pas validation de securyte et sur le front 
+     
     private $startDate;
 
     /**
@@ -61,7 +65,10 @@ class Booking
     
     /**
      * Callback appelé à chaque fois qu'on crée une réservation
+     * 
      * @ORM\PrePersist
+     * @ORM\PreUpdate
+     * 
      * @return void
      */
     public function prePersist() {

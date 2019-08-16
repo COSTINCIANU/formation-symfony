@@ -2,6 +2,9 @@ div.container {
     margin-top: 20px;
 }
 
+
+/***** debut section de Ad  annonce *****/
+
 div.ad-title {
     padding: 2em;
     background-size: cover;
@@ -14,6 +17,18 @@ div.ad-title p {
     color: white;
     text-shadow: 3px 3px 3px rgba(0, 0, 0, 0, 5);
 }
+
+
+/*** button de l'annonce inviduele ****/
+
+div.ad-title .btn {
+    margin-top: 2em;
+    font-size: 1.5em;
+    line-height: 1.5em;
+}
+
+
+/***** fin section de Ad annonce *****/
 
 div.carousel-caption {
     text-shadow: 3px 3px 3px rgba(0, 0, 0, 0, 5);
@@ -38,6 +53,11 @@ div.carousel-caption {
     max-height: 24px;
 }
 
+.avatar-micro {
+    max-width: 20px;
+    max-height: 20px;
+}
+
 
 /**** fi de la Declaration de la photo Avatar de profil User *******/
 
@@ -51,3 +71,28 @@ div.carousel-caption {
 
 
 /******* fin de calendriers de reservation avec de date qui qont ou pas disponible se affiche en rouge  **********/
+
+
+/**** section les etoile de commentaire *****/
+
+span.rating i {
+    color: goldenrod;
+}
+
+
+/**** fin de section etoile de commentaire *****/
+
+
+/*** ici on cible toute les alerte qui a de lien a ****/
+
+.alert a {
+    text-decoration: none;
+}
+
+.alert .btn {
+    color: white;
+    /*** pour que le text soit blanc sue les button ***/
+}
+
+
+/***  fin ici on cible toute les alerte qui a de lien a ****/

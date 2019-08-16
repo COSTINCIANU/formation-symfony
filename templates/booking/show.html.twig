@@ -8,7 +8,7 @@
 {% set author = ad.author %} {# variable pour l'auteur #}
 
  <div class="container">
-   <h1>Votre réservation (n°{{booking.id}})</h1>
+   <h1 class="my-5">Votre réservation (n°{{booking.id}})</h1>
 
    {# on met ici en cas que dans l'url on appele avec le parametre 
    get withAlert = true j'aimerais que ça se affiche et si ça existe j'aimerais faire certain chose  #}
@@ -34,8 +34,10 @@
        <div class="col">
           <div class="alert alert-light">
            <h2>Détails</h2>
-           {# la balise dl veut dire definition list dt = detail dd = description #}
+           {# la balise dl veut dire definition list dt = detail dd = description de ses enfants #}
            <dl class="row">
+           {# ON Utilisez plutôt .row on <dl>et 
+           utilisez des classes de colonnes de grille (ou mixins) sur its <dt>et ses <dd>enfants. #}
            <dt class="col-md-4">Numéro</dt>
            <dd class="col-md-8">{{booking.id}}</dd>
            <dt class="col-md-4">Date d'arrivée</dt>
@@ -45,9 +47,11 @@
            <dt class="col-md-4">Nombre de nuits</dt>
            <dd class="col-md-8">{{booking.duration}}</dd>
            <dt class="col-md-4">Montant total</dt>
-           <dd class="col-md-8">{{booking.amount}} &euro;</dd>
+           <dd class="col-md-8">{{booking.amount | number_format(2, ',', ' ')}} &euro;</dd> 
+           {# avec | number_format(2, ',', ' ')}} on donne 2 decimale une vigule , et un espace #}
            <dt class="col-md-4">Commentaire</dt>
-           <dd class="col-md-8">{{booking.comment}}</dd>
+           <dd class="col-md-8">{{booking.comment | default('Aucun commentaire')}}</dd> 
+           {# Filtre twig : Default() permet de donner une valeur par défaut lors de l'affichage d'une variable #}
            </dl>
 
            <hr>
@@ -70,8 +74,36 @@
 
           <a href="{{ path("user_show", {'slug' : author.slug}) }}" 
           class="btn btn-primary">Plus d'infos sur {{author.firstName}}</a>
-          
           </div> {# fin div alert-light #}
+
+        <div class="alert alert-light" id="comment">
+        {# ici on cible directement l'id="comment" pour nous emméner directement sur l
+        page de commentaire sur booking de réservation  #}
+           <h2 class="alert-heading">Votre avis compte !</h2>
+
+            {# si la date de ahjour'hui et bine superieur a la date
+            de fin de notre réservation donc que on et parti  de l'appartement alors on veut maintnant le note  #}
+             {% if date() > date(booking.endDate) %}
+               {% set comment = booking.ad.commentFromAuthor(app.user) %}             
+                 {% if comment is not null %}
+                    <blockquote>
+                       {{comment.content}}
+                    </blockquote>
+                    
+                    <strong>Note : </strong> 
+                    {% include 'partials/rating.html.twig' with {'rating' : comment.rating} %}
+                  
+                  {% else %}
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                      <button type="submit" class="btn btn-success">Confirmer !</button> 
+                    {{ form_end(form) }}
+                  {% endif %}
+                {% else %}
+               {# si non  #}
+              <p>Vous ne pourrez pas noter cette annonce tant que votre voyage ne sera pas complet !</p>
+             {% endif %}
+        </div> {# fin div alert alert-light #}
        </div> {# fin div col 1 detail de la reservation  #}
       
        <div class="col">

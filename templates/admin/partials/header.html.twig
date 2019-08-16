@@ -1,0 +1,90 @@
+
+   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="{{ path('homepage') }}">SymBNB !</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+<div class="collapse navbar-collapse" id="navbarColor03">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+            <i class="fas fa-chart-line"></i>
+            Dashboard
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('admin_ads_index') }}">
+            <i class="fas fa-hotel"></i>
+            Annonces
+            </a>
+        </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">
+            <i class="fas fa-folder"></i>
+            Réservations
+            </a>
+        </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{ path('admin_comment_index') }}">
+            <i class="fas fa-comments"></i>
+            Commentaires
+            </a>
+        </li> 
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+            <i class="fas fa-users"></i>
+            Utilisateurs
+            </a>
+        </li>
+</ul>
+
+<ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a href="{{ path('homepage') }}" target="_blank" class="nav-link">
+            <i class="fas fa-eye"></i>
+            Voir le site
+        </a>
+    </li>
+   {% if app.user %} {# si j'ai un user dans ma variable app et que se pas null #}
+            {# si on et connecté #}
+    <li class="nav-item dropdown">
+        {# ici le data-toggle="dropdown" permet de fire ouvrir le menu deroulet de dropdown #}
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountDropdownLink">
+            <img src="{{app.user.picture}}" class="avatar avatar-mini" alt="Avatar de {{app.user.fullName}}">
+            {{app.user.fullName}}
+        </a> {#  #}
+        {# ici on donne de class bootstrap pour dire que le menu serra ferre a droit #}
+
+        {# avec aria-labelledby="accountDropdownLink" on fait appel a l'id declare dans href="#"
+            ce commen ça que on arrive le ouvrire en faisaint appele par sont id
+            Bootstrap va comprendre que quand on click sur le lien accountDropdownLink se cette
+            accountDropdownLink que doit se ouvrire parceque ici on a la meme  #}
+        <div class="dropdown-menu dropdown-menu-right" 
+             aria-labelledby="accountDropdownLink">
+          <a href="{{ path('admin_account_logout') }}" class="dropdown-item">Déconnexion</a>
+        </div> {# fin div dropdown-menu #}
+    </li>
+    {% endif %}
+        </ul>
+    </div>
+</nav>
+
+    {# La variable globale app elle represente toutes 
+    sorte d'informations sur l'application et son état#}
+    {% for label, messages in app.flashes %}
+     <div class="container">
+        <div class="alert alert-{{ label }}">
+           {% for message in messages %}
+                <p>{{ message | raw }}</p>
+           {% endfor %}
+        </div> {# fin div alert #}
+     </div> {# fin div container #}
+   {% endfor %} 
+
+
+{# RAPPEL:  la variable globale APP Contien des 
+informations sur l'application, y compris sur l'utilisateur #}
+
+{# VARIABLE APP.USER:
+ Represente l'utilisateur connecté (vaut null si on n'est pas connecté) #}

@@ -1,0 +1,28 @@
+/*** Administaration des annonces ****/
+
+
+/***  Gestion de annonce avatar   ****/
+
+.avatar-micro {
+    max-width: 20px;
+    max-height: 20px;
+}
+
+
+/*** fin Gestion de annonce avatar   ****/
+
+
+/**** depart affichege de formulaire login ****/
+
+body {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+.card {
+    margin-top: 10%;
+}
+
+
+/**** fin affichege de formulaire login ****/

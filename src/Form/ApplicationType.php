@@ -21,7 +21,8 @@ class ApplicationType extends AbstractType {
     // protected ça veut dire que je peut faire appele a cette fonction de configuration  
     // alors si elle est en protected les class que utilise ApplicationType pouron l'utiliser cette function
     protected function getConfiguration($label, $placeholder, $options = []) {
-        return array_merge([
+        // avec le array_merge_recursive quans on le donne le tableu de options avec recursive n couvre pas le placeholder
+        return array_merge_recursive([
             'label' => $label,
             'attr' => [
                 'placeholder' => $placeholder

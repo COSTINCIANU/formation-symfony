@@ -5,15 +5,50 @@
 {% block body %}
 
 <div class="container">
-    <h1>Inscrivez vous sur notre site !</h1>
+    <h1 class="my-5">Inscrivez vous sur notre site !</h1>
 
     {{ form_start(form) }} {# le form_start on veut faire demarer notre formulaire #}
 
-    {{ form_widget(form) }} {# le form_widget on veut afficher notre formulaire #}
+     <div class="row">
+        <div class="col">
+           <div class="alert alert-light">
+              <h2 class="alert-heading">Information générales</h2>
+              <hr>
+              {{ form_row(form.firstName) }}
+              {{ form_row(form.lastName) }}
+              {{ form_row(form.email) }}
+              {{ form_row(form.picture) }}
+           </div> {# fin div alert-light #}
 
-     <button type="submit" class="btn btn-success">Confirmez l'inscription</button>
+          <div class="alert alert-light">
+             <h2 class="alert-heading">Mot de passe</h2>
+             <hr>
+             {{ form_row(form.hash) }}
+             {{ form_row(form.passwordConfirm) }}
+          </div> {# fin div col #}
+          
+        </div> {# fin div col premier #}
 
+        <div class="col">
+          <div class="alert alert-light">
+          <h2 class="alert-heading">Détails</h2>
+          <hr>
+          {{ form_row(form.introduction) }}
+          {{ form_row(form.description) }}
+
+          <hr>
+          <p>Vous y êtes presque, confirmez votre inscription et rejoignez nous !</p>
+          
+          <button type="sublit" class="btn btn-success">
+               <i class="fas fa-check"></i>
+               Confirmez l'inscription
+          </button>
+          
+          </div> {# fin div alert-light second #}
+        </div> {# fin div col second #}
+     </div> {# fin div row #}
     {{ form_end(form) }} {# le form_end a qui on enverra la fin de formulaire #}
+
 </div>  {# fin div container #}
 
 {% endblock %}

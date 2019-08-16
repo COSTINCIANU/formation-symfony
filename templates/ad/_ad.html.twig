@@ -8,8 +8,14 @@
           <div class="col-md-4">
              <div class="card bg-light mb-3">
                  <div class="card-header text-center">
-                    {{ ad.rooms }} chambres, <strong>{{ ad.price }}&euro; / nuit</strong> <br>
+                    {{ ad.rooms }} chambres, <strong>{{ ad.price | number_format(2, ',', ' ')}} &euro; / nuit</strong> <br>
+                    
+                    {% if ad.comments|length > 0 %}
+                       {% include 'partials/rating.html.twig' with {'rating' : ad.avgRatings} %}
+                    {% else %}
                     <small>Pas encore noté</small> 
+                    {% endif %}
+                    
                  </div> {# fin div header text-center se pour centre le text au centre #}
                  
                   <a href="{{ url }}">
@@ -26,7 +32,7 @@
                        <p class="card-text">
                            {{ad.introduction}}
                        </p>
-                      <a href="{{ url }}" class="btn btn-secondary">En savoir plus !</a>
+                      <a href="{{ url }}" class="btn btn-primary float-right">En savoir plus !</a>
                        {# Si il y a quel'qu'en qui et connecté et en plus de ça l'utilisateur connecte se le meme
                         qui a créer cette l'annonce  alors on afficera le lien #}
                         {# Attention en twig on utilise le == mais pas le === #}

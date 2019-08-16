@@ -12,16 +12,49 @@ veut utiliser une form bien particulier #}
 {% block body %}
 
      <div class="container">
-        <h1>Créer une nouvelle annonce</h1>
+        <h1 class="my-5">Créer une nouvelle annonce</h1>
 
        {# il fu pas oublier de configure dans config/packages:twig.yaml
         la ligne suivante pour les formulaire bootstrap 4 
            form_themes: ['bootstrap_4_layout.html.twig'] #}
         {{ form_start(form) }}
+      <div class="row">
+          <div class="col">
+             <div class="alert alert-light">
+                <h2>Informations générales</h2>
+                <hr>
+                {{ form_row(form.title) }}
+                {{ form_row(form.slug) }}
+                {{ form_row(form.price) }}
+                {{ form_row(form.rooms) }}
+             </div> {# fin div alert-light #}
 
-        {{ form_widget(form) }}
+             <div class="alert alert-light">
+                <h2>Détails de l'annonce</h2>
+                <hr>
+                {{ form_row(form.introduction) }}
+                {{ form_row(form.content) }}
+             </div> {# fin div alert-light second #}
+          </div> {# fin div col  #}
 
-        <button type="submit" class="btn btn-primary">Créer la nouvelle annonce</button>
+          <div class="col">
+             <div class="alert alert-light">
+                 <h2>Images de l'annonce</h2>
+                 <hr>
+                 {{ form_row(form.coverImage) }}
+                 {{ form_row(form.images) }}
+             </div> {# fin div alert-light second div  #}
+          </div> {# fin div col #}
+      </div> {# fin div #}
+
+      <div class="alert alert-success clearfix">
+        <h2 class="alert-heading">Sauvegarder mon annonce</h2>
+         <p>Vous êtes sur le point de créer votres annonce, nous sommes super fier de vous !</p> 
+         <button type="submit" class="btn btn-primary float-right">
+             <i class="fas fa-check"></i>
+             Créer la nouvelle annonce
+         </button>
+      </div> {# fin div alert-success #}
  
         {{ form_end(form) }}
      </div> {# fin div container #}

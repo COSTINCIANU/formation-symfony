@@ -35,12 +35,12 @@ class AccountController extends AbstractController
         // ici on voit la dernier erreur avec une dump($error) on rentre de fause info pour verifier si ca affiche les erreur
         $error = $utils->getLastAuthenticationError();
 
-        //permet de recupere la dernier adresse mail rentre
+        //permet de recupere la dernier nom d'utilisateur qui a etais connecté
         $username = $utils->getLastUsername();
 
         return $this->render('account/login.html.twig', [
             'hasError' => $error !== null,
-            'username' => $username  //permet de recupere la dernier adresse mail rentre
+            'username' => $username //permet de recupere la dernier nom d'utilisateur qui a etais connecté
         ]);
     }
 

@@ -1,0 +1,165 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modification de l'annonce numéro {{ad.id}}{% endblock %}
+
+{% form_theme form _self %}
+{# ici on definit le tehme de cette formulaire _self veut dire dans ce ficheir on souvgarde  #}
+
+{% block body %}
+
+<div class="container">
+  <h1 class="text-center my-5">Modification de l'annonce {{ad.title}}</h1>
+
+      {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col">
+            <div class="card bg-light mb-5">
+                <div class="card-header">
+                    <h4 class="card-title">Corriger l'annonce ?</h4>
+                </div> {# fin div card-header #}
+                    <div class="card-body">                
+                    {{ form_widget(form) }}
+
+                    <button type="submit" class="btn btn-primary">
+                         <i class="fas fa-check"></i>
+                         Enregistrer les modifications
+                    </button>
+                    </div> {# fin div card-body #}
+            </div> {#fin div card bg-light#}
+        </div> {# fin div col #}
+
+    <div class="col">
+        <div class="card bg-light">
+                <div class="card-header">
+                    <h4 class="card-title">Les réservations</h4>
+                </div> {# fin div card-header #}
+            <div clas"card-body">
+                <table class="table">
+                       <thead>
+                            <tr>
+                               <th>Id</th>
+                               <th>Voyageur</th>
+                               <th>Date de réservation</th>
+                               <th></th>
+                            </tr>
+                       </thead>
+                       <tbody>
+                            {% for booking in ad.bookings %}
+                            <tr>
+                               <td>{{booking.id}}</td>
+                               <td>{{booking.booker.fullName}}</td>
+                               <td>{{booking.createdAt | date('d/m/Y H:i:s')}}</td>
+                               <td>
+                                    <a href="#" class="btn btn-primary">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                               </td>
+                            </tr>
+                            {% endfor %}
+                       </tbody>
+                   </table>
+               </div> {# fin div card-body #}
+           </div> {#fin div card bg-light#}
+
+        <div class="card bg-light mt-5">
+                <div class="card-header">
+                    <h4 class="card-title">Les commentaire</h4>
+                </div> {# fin div card-header #}
+            <div clas"card-body">
+                <table class="table">
+                       <thead>
+                            <tr>
+                               <th>Id</th>
+                               <th>Voyageur</th>
+                               <th>Note</th>
+                               <th>Commentaire</th>
+                               <th></th>
+                            </tr>
+                       </thead>
+                       <tbody>
+                            {% for comment in ad.comments %}
+                            <tr>
+                               <td>{{comment.id}}</td>
+                               <td>{{comment.author.fullName}}</td>
+                               <td>{{comment.rating}}</td>
+                               <td>{{comment.content}}</td>
+                               <td>
+                                    <a href="#" class="btn btn-primary">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                               </td>
+                            </tr>
+                            {% endfor %}
+                       </tbody>
+                   </table>
+               </div> {# fin div card-body #}
+           </div> {#fin div card bg-light#}
+
+       </div> {#fin div col #}
+    </div> {# fin div row #}
+
+
+   {{ form_end(form) }}
+</div> {# fin div container#}
+{% endblock %}
+
+{# ce cette block qui va être appele quand on veut affiche widget ad.image #}
+{% block _ad_imags_widget %} 
+    {{ form_widget(form) }}  
+    {# la varible form ici ne represente pa le grand formulaire mais uniquement la champ ad.image #}
+{% endblock %}
+
+{% block _ad_images_entry_row %}
+  <div id="block_{{id}}">
+      {{ form_widget(form) }} 
+      {# la variable form representa une entre au sein decette colection des image de ces formulaire  #}
+      {# du coup comment on demande que le widget on va avoir que cette champs on demande pas le label pour les chifre qui se affihe en haus de chaque champs  #}
+  </div> {# fin div  id #}
+{% endblock %}
+
+{% block _ad_images_entry_widget %}
+{#  la variable form represente une entre on et dans le block des ENTRY quand on fair un widget sur une image ques que on doit afficher #}
+   <div class="row align-items-center mb-3">
+       <div class="col-4">
+         {% if value %}
+          <img src="{{value.url}}" class="img-fluid" alt="">
+          {# ici on veut afficher le champ avec son Url et sonc label tout ce que on veut #}
+         {% endif %}
+       </div> {# fin div col-4 #}
+       <div class="col-6">
+          {{ form_row(form.caption) }}
+          {# la form represente une entre legende de l'image #}
+       </div> {# fin div col-6#}
+       <div class="col">
+         <button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{id}}">
+          {# avec la data-action se pour supprime et avec la data-target se ce que on vise pour trouver par son ID #}
+            <i class="fas fa-trash"></i>
+            {# icon de la poubelle  fa-trash #}
+         </button>
+       </div> {# fin div col button #}
+   </div> {# fin div row #}
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+       // function pour supresion des images 
+       // quand le document est pret !
+       $(document).ready(function(){
+        // on va cherche toute lesboutton dont l'attribut data-action=delete je veut les chope
+        $('[data-action="delete"]').on('click', function(){
+            // un foit que je les ai je envie de le metre un evenement lisner quan .on va click su
+            // vous voila la function que je vu que vous fait, le comportement que je vu que vous avez
+            const target = this.dataset.target; 
+            // mthn que j'ai ma target j'ai en vie de ale le cherche 
+            $(target).remove();
+            // je cherche ma target et je le suprime 
+
+            
+        });
+       });
+    </script>
+
+{% endblock %}

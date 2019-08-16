@@ -11,7 +11,8 @@
         <h1>{{ad.title}}</h1>
           <p>{{ad.introduction}}</p>
              <p class="h2">
-             <strong>{{ad.rooms}} chambres</strong> pour <strong>{{ad.price}}&euro;</strong> par nuit
+             <strong>{{ad.rooms}} chambres</strong> pour <strong>{{ad.price | number_format(2, ',', ' ')}} &euro;</strong> par nuit
+             {# filtre number-format se  2 = deux cifre  qui sont separe par la virgule = ,  et qui a l'espace de millier = ' ' que on met entre les grand nombre #}
              </p>  
               <a href="{{ path('booking_create', {'slug' : ad.slug}) }}" class="btn btn-primary">Réserver !</a>
               {# Si il y a quel'qu'en qui et connecté et en plus de ça l'utilisateur connecte se le meme
@@ -59,6 +60,47 @@
                               </a>
                   </div> {# fin div id="carouselExampleCaptions #}
               </div> {#  fin div bg-exemple carrouselle #}
+              
+              
+              <hr>
+
+            {% if ad.comments|length > 0 %}
+               <h2 class="mb-3">Commentaires de nos voyageurs :</h2>
+                
+                <div class="alert alert-info">
+                    <h4 class="alert-heading text-center">
+                       <div class="row align-items-center">
+                          <div class="col">
+                             Note globale donnée par nos voyageurs
+                          </div> {# fin div col #}
+
+                          <div class="col">
+                            {% include 'partials/rating.html.twig' with {'rating' : ad.avgRatings} %}
+                             <br>
+                             <small>(Calculée sur {{ ad.comments|length }} avis)</small>
+                          </div> {# fin div col #}
+                       </div> {# fin div row #}
+                    </h4>
+                </div> {# fin div alert-info #}
+               
+               {# pour chaque commentaire dans annonce de commentaire  #}
+               {% for comment in ad.comments %}
+                  <div class="bg-light rounded mb-3 py-3 px-3">
+                     <strong>{{ comment.author.firstName }}</strong> a dit :
+                     <blockquote>
+                        {{comment.content}}
+                     </blockquote>
+                     <strong>Note donnée : </strong>
+
+                  {% include 'partials/rating.html.twig' with {'rating': comment.rating} %}
+
+                  </div> {# fin div bg-light rounded #}
+               {% endfor %}
+            {% else %}
+               <h2>Cette annonce n'a pas encore reçu de commentaires .</h2>
+            {% endif %}
+            
+
             </div> {# din div col-md-8 mb-3 se pour que ils
                passent en deçu une de l'autre sur le mobile et mb-3 se pour margin en bas = margin bottom #}
 
@@ -93,3 +135,4 @@
 
 
 {% endblock %}
+
