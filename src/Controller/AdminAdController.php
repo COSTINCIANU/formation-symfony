@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
+use App\Service\PaginationService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminAdController extends AbstractController
 {
     /**
-     * @Route("/admin/ads", name="admin_ads_index")
+     * @Route("/admin/ads/{page<\d+>?1}", name="admin_ads_index")
+     * 
+     * ou on peut mettre aussi un autre contrainte  option requirements exemple ça : , requirements={"page": "\d+"} ou  ça ("/admin/ads/{page<\d+>?1}", name="admin_ads_index" 
      */
-    public function index(AdRepository $repo)
-    {
+    public function index(AdRepository $repo, $page, PaginationService $pagination)
+    {   
+
+        $pagination->setEntityClass(Ad::class)
+                   ->setPage($page);
+                   // ->setRoute('admin_ads_index');
+        
+        //     $limit = 10;
+        //     $start = $page * $limit - $limit;
+        //     // exemple de calcul 
+        //     // 1 * 10 = 10 - 10 = 0
+        //     // 2 * 20 = 20 - 10 = 10  ect ... ect...
+        // $total = count($repo->findAll());
+        // $pages = ceil($total / $limit);  
+        // // ceil function php pour arrondire le ciffre float exemple 3.4 => 4
+        //     // Méthode find : permet de retrouver un enregistrement par son identifiant
         return $this->render('admin/ad/index.html.twig', [
-            'ads' => $repo->findAll()
+            'pagination' => $pagination
         ]);
     }
    

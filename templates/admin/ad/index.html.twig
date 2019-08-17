@@ -19,7 +19,8 @@
         </thead>
 
         <tbody>
-          {% for ad in  ads %} {# pour chaque anonnece dans le tableau des annonces #}
+        {# pour chaque annonce dans pagination cherche ces données #}
+          {% for ad in pagination.data %} {# pour chaque anonnece dans le tableau des annonces #}
            <tr>
               <td>{{ad.id}}</td>
               <td>{{ad.title}}</td>
@@ -44,5 +45,10 @@
           {% endfor %}
         </tbody>
     </table>
+
+   {{ pagination.display() }}
+
+ {# {% include 'admin/partials/pagination.html.twig' with {'route' : 'admin_ads_index'} %} #}
+ {# ici on le donne une (variable route) et avec le (with) on donne (en parametre la route) pour appele de route differente sur la gestion d'annonce ou reservation ou administration  #}
  </div> {# fin div container #}
 {% endblock %}

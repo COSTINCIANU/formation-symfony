@@ -21,7 +21,8 @@
 
        <tbody>
         {# pour chaque commentaire dans la liste des commentaire #}
-        {% for comment in comments %}
+        {# pour chaque commentaire je veut le commentaire dans pagination de données #}
+        {% for comment in pagination.data %}
            <tr>
               <td>{{comment.id}}</td>
               <td>{{comment.createdAt|date('d/m/Y H:i:s')}}</td>
@@ -44,5 +45,8 @@
         {% endfor %}
        </tbody>
      </table>
-  </div> {# fin div container-fluid #}
+
+   {{ pagination.display() }}
+
+</div> {# fin div container-fluid #}
 {% endblock %}
