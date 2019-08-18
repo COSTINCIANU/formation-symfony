@@ -8,7 +8,8 @@
 
         
         
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+        {# La function ASSET() Elle permet de retrouver un fichier statique peu importe sa version !#}
 
         <!--  cdn Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
@@ -16,8 +17,10 @@
         crossorigin="anonymous">
 
         <!-- css personnaliser -->
-        <link rel="stylesheet" href="/css/app.css">
+        {#  <link rel="stylesheet" href="{{ asset('build/css/app.css') }}"> #}
+       
         {% block stylesheets %}{% endblock %}
+       
     </head>
     <body>
 
@@ -25,15 +28,16 @@
    
     {% block body %}{% endblock %}
                 
+      
     {% include 'partials/footer.html.twig' %}
                     {#les script on les declare dans cette ordre la 
                     jquery en premier,
-                    popper en second, et 
+                    popper en second, et        
                     bootstrap en dernier parque il a besoin de deux premier #}
-                    <script src="/js/jquery.min.js"></script>
-                    <script src="/js/popper.min.js"></script>
-                    <script src="/js/bootstrap.min.js"></script>
-                   {% block javascripts %} {% endblock %}             
+
+      <script src="{{ asset('build/js/app.js') }}"></script>
+    
+     {% block javascripts %}{% endblock %}           
     </body>
 </html>
 

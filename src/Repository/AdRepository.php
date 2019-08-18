@@ -19,6 +19,20 @@ class AdRepository extends ServiceEntityRepository
         parent::__construct($registry, Ad::class);
     }
 
+    public function findBestAds($limit){
+        // Le QueryBuilder Un utilitaire qui nous à créer des requêtes DQL
+        // Pas de précition d'entité Dand le repository des Ad, la requête se base sur l'entité Ad
+         return $this->createQueryBuilder('a')
+                     ->select('a as annonce, AVG(c.rating) as avgRatings')
+                     ->join('a.comments', 'c')
+                     ->groupBy('a')
+                     ->orderBy('avgRatings', 'DESC')
+                     ->setMaxResults($limit)
+                     ->getQuery()
+                     ->getResult();
+
+        }
+
     // /**
     //  * @return Ad[] Returns an array of Ad objects
     //  */
