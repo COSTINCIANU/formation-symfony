@@ -7,5 +7,4 @@ global.$ = global.jQuery = $;
 // dans global.$ j'ai aussi le  $ 
 // donc on stock jQuery dans la variable globale 
 // pour le appeler par tout ou il ya le pluging jQuery
-
 import 'bootstrap';

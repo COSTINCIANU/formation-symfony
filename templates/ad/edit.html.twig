@@ -23,11 +23,13 @@
      </div> {# fin div container #}
 {% endblock %}
 
-{% block javascripts %}
+
     
    {# ici on appele les function neccesaire au 
    functionement de formulaire d'creation ou de edition
    que on a declare dans le dossier plublic JS/ad.js #}
-   <script src="{{ asset('build/js/ad.js') }}"></script>
-
-{% endblock %}
+    {% block javascripts %}
+       <script src="{{ asset('build/js/ad.js') }}"></script>
+    
+    {{ encore_entry_script_tags('js/ad') }}
+   {% endblock %}  

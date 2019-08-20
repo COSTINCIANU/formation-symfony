@@ -4,10 +4,8 @@
         <meta charset="UTF-8">
         <title>SymBNB - {% block title %}Welcome!{% endblock %}</title>
         <!---  meta -->
-        <meta name="viewport" content="width=device-width, user-scalable=no">
-
-        
-        
+        <meta name="viewport" content="width=device-width, user-scalable=1.0">
+         <!--  Link -->
         <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
 
         <!--  cdn Font Awesome -->
@@ -17,7 +15,9 @@
 
         <!-- css personnaliser -->
       {# <link rel="stylesheet" href="/css/app.css"> #}
-        {% block stylesheets %}{% endblock %}
+            {% block stylesheets %}
+     {{ encore_entry_link_tags('css/app') }}
+ {% endblock %}
     </head>
     <body>
 
@@ -31,7 +31,10 @@
                     popper en second, et 
                     bootstrap en dernier parque il a besoin de deux premier #}
          <script src="{{ asset('build/js/app.js') }}"></script> 
-       {% block javascripts %} {% endblock %}             
+         {% block javascripts %}
+
+    {{ encore_entry_script_tags('js/app') }}
+   {% endblock %}                
     </body>
 </html>
 

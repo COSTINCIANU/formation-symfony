@@ -18,8 +18,10 @@
 
         <!-- css personnaliser -->
         {#  <link rel="stylesheet" href="{{ asset('build/css/app.css') }}"> #}
-       
-        {% block stylesheets %}{% endblock %}
+       {% block stylesheets %}
+    
+     {{ encore_entry_link_tags('css/app') }}
+ {% endblock %}
        
     </head>
     <body>
@@ -37,7 +39,10 @@
 
       <script src="{{ asset('build/js/app.js') }}"></script>
     
-     {% block javascripts %}{% endblock %}           
+
+    {{ encore_entry_script_tags('js/app') }}
+     {% block javascripts %}
+   {% endblock %}         
     </body>
 </html>
 
